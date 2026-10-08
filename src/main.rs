@@ -68,14 +68,12 @@ async fn serve(_: CommandContext) -> Result<()> {
     info!("Launching on `{}`...", sock_path.display());
     Server::new()
         //    HEALTH
-        .get("/ping", hands::health::handle_ping)
+        .get("/ping", hands::handle_ping)
+        .get("/refresh", hands::handle_refresh)
         //    SKILLS
-        .post("/skills/list", hands::skills::handle_skills_list)
-        .post("/skills/{skill}/tools", hands::skills::handle_tools_list)
-        .post(
-            "/skills/{skill}/call/{tool}",
-            hands::skills::handle_tool_call,
-        )
+        .post("/skills/list", hands::handle_skills_list)
+        .post("/skills/{skill}/tools", hands::handle_tools_list)
+        .post("/skills/{skill}/call/{tool}", hands::handle_tool_call)
         .callback(true)
         .run(sock_name)
         .await
