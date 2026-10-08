@@ -7,7 +7,7 @@ pub fn tools_list() -> Vec<Tool> {
 }
 
 #[log()]
-pub async fn handle_hello(tx: Sender<Bytes>, _payload: JsonValue) -> Result<()> {
+pub async fn handle_hello(tx: Sender<Bytes>, _query: ToolQuery<JsonValue>) -> Result<()> {
     tx.send(Event::Answer("Hello, world!".into()))?;
     Ok(())
 }
