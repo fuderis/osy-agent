@@ -2,7 +2,7 @@ pub mod test;
 
 use crate::prelude::*;
 
-use anylm::api::Tool;
+use anylm::Tool;
 use osy_skill::AgentSkill;
 
 /// System agent skills.
@@ -11,6 +11,6 @@ use osy_skill::AgentSkill;
 #[display(rename_all = "snake_case")]
 pub enum SkillKind {
     #[skill(module = "test", description = "Test skill.")]
-    #[tools("hello")]
+    #[tool(name = "hello", description = "Prints hello.")]
     Test,
 }

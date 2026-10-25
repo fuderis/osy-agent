@@ -1,13 +1,18 @@
 use crate::prelude::*;
 
-use anylm::Tool;
+use anylm::Schema;
 
-pub fn tools_list() -> Vec<Tool> {
-    vec![Tool::new("hello", "Prints hello.")]
+#[derive(Deserialize, Schema)]
+pub struct HelloAction {
+    pub name: Option<String>,
 }
 
 #[log()]
-pub async fn handle_hello(tx: Sender<Bytes>, _query: ToolQuery<JsonValue>) -> Result<()> {
-    tx.send(Event::Answer("Hello, world!".into()))?;
+pub async fn handle_hello(tx: Sender<Bytes>, query: ToolQuery<HelloAction>) -> Result<()> {
+    let ToolQuery { payload, .. } = query;
+
+    let target = payload.name.unwrap_or("World".into());
+    tx.send(Event::Answer(format!("Hello, {target}!")))?;
+
     Ok(())
 }
