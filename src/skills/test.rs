@@ -1,7 +1,5 @@
 use crate::prelude::*;
 
-use anylm::Schema;
-
 #[derive(Deserialize, Schema)]
 pub struct HelloAction {
     pub name: Option<String>,
